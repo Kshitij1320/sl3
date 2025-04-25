@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart</title>
+</head>
+<body>
+<h2>Your Cart</h2>
+{% if books %}
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>Title</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+    </tr>
+    {% for item in books %}
+    <tr>
+        <td>{{ item.book.title }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ item.book.price }}</td>
+        <td>${{ item.subtotal|floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="3" align="right"><strong>Total:</strong></td>
+        <td>${{ total }}</td>
+    </tr>
+</table>
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
+<p><a href="{% url 'book_list' %}">Continue Shopping</a></p>
+</body>
+</html>

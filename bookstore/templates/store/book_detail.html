@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ book.title }}</title>
+</head>
+<body>
+<h2>{{ book.title }}</h2>
+<p><strong>Author:</strong> {{ book.author }}</p>
+<p><strong>Description:</strong> {{ book.description }}</p>
+<p><strong>Price:</strong> ${{ book.price }}</p>
+<p><strong>Stock:</strong> {{ book.stock }}</p>
+
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'add_to_cart' book.pk %}">
+    {% csrf_token %}
+    <input type="submit" value="Add to Cart">
+</form>
+{% else %}
+<p><a href="{% url 'login' %}">Login to add to cart</a></p>
+{% endif %}
+<p><a href="{% url 'book_list' %}">Back to list</a></p>
+</body>
+</html>

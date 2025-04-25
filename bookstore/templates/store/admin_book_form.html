@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if book %}Edit{% else %}Add{% endif %} Book</title>
+</head>
+<body>
+<h2>{% if book %}Edit{% else %}Add{% endif %} Book</h2>
+{% if errors %}
+<ul style="color:red;">
+    {% for error in errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <label>Title:</label><br>
+    <input type="text" name="title" value="{{ book.title|default:'' }}"><br>
+    <label>Author:</label><br>
+    <input type="text" name="author" value="{{ book.author|default:'' }}"><br>
+    <label>Description:</label><br>
+    <textarea name="description">{{ book.description|default:'' }}</textarea><br>
+    <label>Price:</label><br>
+    <input type="text" name="price" value="{{ book.price|default:'' }}"><br>
+    <label>Stock:</label><br>
+    <input type="text" name="stock" value="{{ book.stock|default:'' }}"><br><br>
+    <input type="submit" value="{% if book %}Update{% else %}Add{% endif %} Book">
+</form>
+<p><a href="{% url 'admin_book_list' %}">Back to Book List</a></p>
+</body>
+</html>

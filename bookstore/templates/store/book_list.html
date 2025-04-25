@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book List</title>
+</head>
+<body>
+<h2>Books</h2>
+{% if user.is_authenticated %}
+<p>Welcome, {{ user.username }} | <a href="{% url 'logout' %}">Logout</a></p>
+{% else %}
+<p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Register</a></p>
+{% endif %}
+<ul>
+    {% for book in books %}
+    <li><a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a> by {{ book.author }}</li>
+    {% empty %}
+    <li>No books available.</li>
+    {% endfor %}
+</ul>
+{% if user.is_authenticated %}
+<p><a href="{% url 'cart_detail' %}">View Cart</a></p>
+{% endif %}
+{% if user.is_staff %}
+<p><a href="{% url 'admin_book_list' %}">Admin Panel</a></p>
+{% endif %}
+</body>
+</html>

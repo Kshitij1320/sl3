@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin - Books</title>
+</head>
+<body>
+<h2>Admin - Book List</h2>
+<p><a href="{% url 'admin_book_add' %}">Add New Book</a> | <a href="{% url 'book_list' %}">User View</a> | <a href="{% url 'logout' %}">Logout</a></p>
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Actions</th>
+    </tr>
+    {% for book in books %}
+    <tr>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>${{ book.price }}</td>
+        <td>{{ book.stock }}</td>
+        <td>
+            <a href="{% url 'admin_book_edit' book.pk %}">Edit</a> |
+            <form method="post" action="{% url 'admin_book_delete' book.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" onclick="return confirm('Are you sure?');">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
